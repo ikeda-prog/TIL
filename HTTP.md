@@ -69,6 +69,71 @@ name=Joe%20User&request=Send%20me%20one%20of%20your%20catalogue
 ### リクエストボディ（メッセージボディ）
 
 ### HTTPレスポンス
+応答の３ブロック
+> 1. 最初の行はステータス行で、受け入れた HTTP バージョンとステータス要求で構成されます (そして、人間に読めるテキストで意味を簡単に示します)。
+> 2. 後続の行はそれぞれ具体的な HTTP ヘッダーを表しており、クライアントに対して送信したデータに関する情報 (例えば種類、サイズ、圧縮方法、キャッシュ情報) を与えます。クライアントの要求の HTTP ヘッダーブロックと同様に、これらの HTTP ヘッダーも空行で終わるブロックを構成します。
+> 3. 最後のブロックはデータブロックで、任意のデータを含みます。
+
+例１
+```
+HTTP/1.1 200 OK
+Date: Sat, 09 Oct 2010 14:28:02 GMT
+Server: Apache
+Last-Modified: Tue, 01 Dec 2009 20:18:22 GMT
+ETag: "51142bc1-7449-479b075b2891b"
+Accept-Ranges: bytes
+Content-Length: 29769
+Content-Type: text/html
+
+<!DOCTYPE html... (ここにサイズが 29769 バイトの、要求されたウェブページが置かれます)
+```
+
+例２
+```
+HTTP/1.1 301 Moved Permanently
+Server: Apache/2.2.3 (Red Hat)
+Content-Type: text/html; charset=iso-8859-1
+Date: Sat, 09 Oct 2010 14:30:24 GMT
+Location: https://developer.mozilla.org/ (これはリソースの新しいリンクです。ユーザーエージェントはこちらを読み込むでしょう)
+Keep-Alive: timeout=15, max=98
+Accept-Ranges: bytes
+Via: Moz-Cache-zlb05
+Connection: Keep-Alive
+X-Cache-Info: caching
+X-Cache-Info: caching
+Content-Length: 325 (ユーザーエージェントがリンクをたどれない場合に表示する、既定のページを含むコンテンツです)
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="https://developer.mozilla.org/">here</a>.</p>
+<hr>
+<address>Apache/2.2.3 (Red Hat) Server at developer.mozilla.org Port 80</address>
+</body></html>
+```
+
+例３
+```
+HTTP/1.1 404 Not Found
+Date: Sat, 09 Oct 2010 14:33:02 GMT
+Server: Apache
+Last-Modified: Tue, 01 May 2007 14:24:39 GMT
+ETag: "499fd34e-29ec-42f695ca96761;48fe7523cfcc1"
+Accept-Ranges: bytes
+Content-Length: 10732
+Content-Type: text/html
+
+<!DOCTYPE html... (欠けているリソースをユーザが見つけることを支援する、サイト毎にカスタマイズされたページを含みます)
+```
+
+応答ステータスコード
+> HTTP 応答ステータスコード は、特定の HTTP 要求が正常に完了したかを示します。応答は情報応答、成功応答、リダイレクション、クライアントエラー、サーバーエラーの 5 つのクラスに分類されます。
+> - `200`: OK. 要求は成功しました。
+> - `301`: Moved Permanently. この応答コードは、要求したリソースの URI が変更されたことを表します。
+> - `404`: Not Found. サーバーは、要求されたリソースを見つけることができません。
+
 ### レスポンスヘッダー（メッセージヘッダー）
 ### レスポンスボディ（メッセージボディ）
 ### ブラウザ
